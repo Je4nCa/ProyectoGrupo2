@@ -60,6 +60,7 @@ def factura_electronica(usuario_id):
 def crear_guia(usuario_id):
     print(f"Creando guía para el paquete {usuario_id}...")
 
+#Esta función queda pendiente de uso para añadirla como opción a la espera de respuesta del profesor
 def cambiar_estado():
     usuario_id = int(input("Ingrese el número de paquete: "))
     if usuario_id in paquetes:
