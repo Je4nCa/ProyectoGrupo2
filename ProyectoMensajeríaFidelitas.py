@@ -320,9 +320,7 @@ while True:
     elif opcion == '5':
         estadisticas()
     elif opcion == '6':
-        print("Guardando datos en el archivo 'datosmensajeriafidelitas.txt'")
+        print("Guardando datos en el archivo")
         break
     else:
         print("Opción no válida. Por favor, seleccione una opción válida.")
-
-tiene menú contextual
