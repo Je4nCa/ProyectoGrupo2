@@ -5,7 +5,7 @@ paquetes = {}
 facturas = {}
 numero_guia_actual = 1
 
-# Crear el archivo si no existe y cargar datos existentes
+
 def inicializar_sistema():
     global usuarios, paquetes, facturas, numero_guia_actual
     if not os.path.exists("basedemensajeria.txt"):
@@ -26,15 +26,14 @@ def inicializar_sistema():
             if facturas_str:
                 facturas = eval(facturas_str)
 
-# Guardar datos en el archivo
+
+
 def guardar_datos():
     with open("basedemensajeria.txt", "w") as file:
         file.write(str(usuarios) + "\n")
         file.write(str(paquetes) + "\n")
         file.write(str(facturas) + "\n")
         file.write(str(numero_guia_actual))
-
-# Funciones del segundo código
 
 def crear_paquetes(usuario_id):
     print(f"Creando paquete {usuario_id}...")
