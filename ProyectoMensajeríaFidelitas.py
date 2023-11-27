@@ -1,3 +1,5 @@
+#Inicio de proyecto por Hazel
+
 import os
 
 usuarios = {}
@@ -35,6 +37,7 @@ def guardar_datos():
         file.write(str(facturas) + "\n")
         file.write(str(numero_guia_actual))
 
+#Funciones idealizadas por Jean Carlo
 def crear_paquetes(usuario_id):
     print(f"Creando paquete {usuario_id}...")
     paquetes[usuario_id].update({
@@ -73,7 +76,7 @@ def rastrear_paquetes():
     else:
         print("Número de paquete no válido. Registre el paquete primero.")
 
- 
+ #Estas definiciones fueron validadas e idealizadas por Nicole, se crearon en conjunto por llamada
 def registrar_usuario():
 
     correo = input("Correo electrónico: ")
@@ -290,30 +293,7 @@ def estadisticas():
 
         print(f"   - Cédula: {cedula}, Cantidad: {cantidad}")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Menú principal
+#Menú revisado por Fiorella
 while True:
     print("Menú:")
     print("1. Registrar usuario del comercio")
