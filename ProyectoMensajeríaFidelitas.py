@@ -293,6 +293,7 @@ def estadisticas():
 
         print(f"   - Cédula: {cedula}, Cantidad: {cantidad}")
 
+inicializar_sistema()
 #Menú revisado por Fiorella
 while True:
     print("Menú:")
