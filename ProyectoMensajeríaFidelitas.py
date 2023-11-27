@@ -73,6 +73,222 @@ def rastrear_paquetes():
     else:
         print("Número de paquete no válido. Registre el paquete primero.")
 
+ 
+def registrar_usuario():
+
+    correo = input("Correo electrónico: ")
+
+    nombre_comercio = input("Nombre del comercio: ")
+
+    telefono_comercio = input("Teléfono del comercio: ")
+
+    nombre_dueno = input("Nombre del dueño: ")
+
+    ubicacion_local = input("Ubicación del local: ")
+ 
+    usuarios[correo] = {
+
+        'Nombre Comercio': nombre_comercio,
+
+        'Teléfono Comercio': telefono_comercio,
+
+        'Nombre Dueño': nombre_dueno,
+
+        'Ubicación Local': ubicacion_local
+
+    }
+ 
+    print(f'Usuario con correo {correo} registrado con éxito.')
+
+    guardar_datos()
+ 
+def registrar_factura():
+
+    tipo_cedula = input("Tipo de cédula (1 para Nacional / 2 para Extranjero): ")
+
+    numero_cedula = input("Número de cédula: ")
+
+    nombre_registrado = input("Nombre registrado: ")
+
+    telefono = input("Teléfono: ")
+
+    correo = input("Correo: ")
+
+    provincia = input("Provincia: ")
+
+    canton = input("Cantón: ")
+
+    distrito = input("Distrito: ")
+ 
+    facturas[numero_cedula] = {
+
+        'Tipo Cédula': 'Nacional' if tipo_cedula == '1' else 'Extranjero',
+
+        'Número Cédula': numero_cedula,
+
+        'Nombre Registrado': nombre_registrado,
+
+        'Teléfono': telefono,
+
+        'Correo': correo,
+
+        'Provincia': provincia,
+
+        'Cantón': canton,
+
+        'Distrito': distrito
+
+    }
+ 
+    print('Factura electrónica registrada con éxito.')
+
+    guardar_datos()
+ 
+def crear_paquete(correo_usuario):
+
+    global numero_guia_actual  # Agregar esta línea para indicar que se usará la variable global
+
+    nombre_destinatario = input("Nombre de destinatario: ")
+
+    telefono_destinatario = input("Teléfono de destinatario: ")
+
+    numero_cedula_destinatario = input("Número de cédula de destinatario: ")
+
+    peso_paquete = float(input("Peso de paquete (Kilogramos): "))
+
+    cobro_contra_entrega = input("¿Cobro contra entrega? (1 para Sí / 2 para No): ")
+
+    if cobro_contra_entrega == '1':
+
+        monto_cobro = float(input("Monto a cobrar al momento de entregar el paquete (colones): "))
+
+    else:
+
+        monto_cobro = 0.0
+ 
+    punto_recoleccion = usuarios[correo_usuario]['Ubicación Local']
+ 
+    numero_guia = numero_guia_actual
+
+    paquetes[numero_guia] = {
+
+        'Estado': 'Creado',
+
+        'Comercio': usuarios[correo_usuario],
+
+        'Destinatario': {
+
+            'Nombre': nombre_destinatario,
+
+            'Teléfono': telefono_destinatario,
+
+            'Número Cédula': numero_cedula_destinatario
+
+        },
+
+        'Peso': peso_paquete,
+
+        'Cobro Contra Entrega': {
+
+            'Requiere Cobro': cobro_contra_entrega == '1',
+
+            'Monto': monto_cobro
+
+        },
+
+        'Numero Guia': numero_guia
+
+    }
+
+    numero_guia_actual += 1
+ 
+    print(f'Paquete creado con éxito. Número de guía: {numero_guia}')
+ 
+    # Cambiar el estado del paquete a 'Recolectado' automáticamente
+
+    paquetes[numero_guia]['Estado'] = 'Recolectado'
+ 
+    # Mostrar guía
+
+    generar_guia(paquetes[numero_guia])
+ 
+    guardar_datos()
+ 
+def generar_guia(paquete):
+
+    print(f"Número de guía: {paquete['Numero Guia']}")
+
+    print("Información de comercio:")
+
+    print(f"Nombre: {paquete['Comercio']['Nombre Comercio']}")
+
+    print(f"Número de teléfono: {paquete['Comercio']['Teléfono Comercio']}")
+
+    print("Información del destinatario:")
+
+    print(f"Nombre: {paquete['Destinatario']['Nombre']}")
+
+    print(f"Teléfono: {paquete['Destinatario']['Teléfono']}")
+
+    print(f"Si requiere cobro, monto a cobrar: {paquete['Cobro Contra Entrega']['Monto']} colones.")
+ 
+def estadisticas():
+
+    print("Estadísticas:")
+
+    print(f"1. Cantidad total de envíos: {len(paquetes)}")
+
+    print("2. Lista de paquetes enviados:")
+
+    for numero_guia, paquete in paquetes.items():
+
+        print(f"   - Número de guía: {numero_guia}, Estado: {paquete['Estado']}")
+
+    print(f"3. Monto total de cobro: {sum([paquete['Cobro Contra Entrega']['Monto'] for paquete in paquetes.values()])} colones")
+
+    # Contar la cantidad de paquetes por número de teléfono
+
+    cantidad_por_telefono = {}
+
+    for paquete in paquetes.values():
+
+        telefono_destinatario = paquete['Destinatario']['Teléfono']
+
+        if telefono_destinatario in cantidad_por_telefono:
+
+            cantidad_por_telefono[telefono_destinatario] += 1
+
+        else:
+
+            cantidad_por_telefono[telefono_destinatario] = 1
+ 
+    print("4. Cantidad de paquetes por número de teléfono:")
+
+    for telefono, cantidad in cantidad_por_telefono.items():
+
+        print(f"   - Teléfono: {telefono}, Cantidad: {cantidad}")
+ 
+    # Contar la cantidad de paquetes por número de cédula
+
+    cantidad_por_cedula = {}
+
+    for paquete in paquetes.values():
+
+        numero_cedula_destinatario = paquete['Destinatario']['Número Cédula']
+
+        if numero_cedula_destinatario in cantidad_por_cedula:
+
+            cantidad_por_cedula[numero_cedula_destinatario] += 1
+
+        else:
+
+            cantidad_por_cedula[numero_cedula_destinatario] = 1
+ 
+    print("5. Cantidad de paquetes por número de cédula:")
+
+    for cedula, cantidad in cantidad_por_cedula.items():
+
+        print(f"   - Cédula: {cedula}, Cantidad: {cantidad}")
 
 
 
