@@ -60,15 +60,28 @@ def factura_electronica(usuario_id):
 def crear_guia(usuario_id):
     print(f"Creando guía para el paquete {usuario_id}...")
 
-#Esta función queda pendiente de uso para añadirla como opción a la espera de respuesta del profesor
 def cambiar_estado():
     usuario_id = int(input("Ingrese el número de paquete: "))
     if usuario_id in paquetes:
-        paquetes[usuario_id]['Estado'] = input("Ingrese el nuevo estado (Creado/Recolectado/Entregado/Entrega fallida): ")
-        print(f"Estado del paquete {usuario_id} cambiado a: {paquetes[usuario_id]['Estado']}")
-        guardar_datos()
+        print("Opciones de estado:")
+        print("1. Creado")
+        print("2. Recolectado")
+        print("3. Entregado")
+        print("4. Entrega fallida")
+
+        opcion = input("Seleccione una opción (1-4): ")
+
+        if opcion in ['1', '2', '3', '4']:
+            estados = ['Creado', 'Recolectado', 'Entregado', 'Entrega fallida']
+            nuevo_estado = estados[int(opcion) - 1]
+            paquetes[usuario_id]['Estado'] = nuevo_estado
+            print(f"Estado del paquete {usuario_id} cambiado a: {nuevo_estado}")
+            guardar_datos()
+        else:
+            print("Opción no válida. Seleccione una opción del 1 al 4.")
     else:
         print("Número de paquete no válido. Registre el paquete primero.")
+
 
 def rastrear_paquetes():
     usuario_id = int(input("Ingrese el número de paquete: "))
@@ -296,14 +309,14 @@ def estadisticas():
 
 inicializar_sistema()
 #Menú revisado por Fiorella
-while True:
-    print("Menú:")
+ print("Menú:")
     print("1. Registrar usuario del comercio")
     print("2. Crear paquete para envío")
     print("3. Registrar Factura Electrónica")
     print("4. Rastrear paquete")
-    print("5. Estadísticas generales")
-    print("6. Salir")
+    print("5. Modificar estado del paquete")
+    print("6. Estadísticas generales")
+    print("7. Salir")
  
     opcion = input("Seleccione una opción: ")
  
@@ -328,3 +341,4 @@ while True:
         break
     else:
         print("Opción no válida. Por favor, seleccione una opción válida.")
+
