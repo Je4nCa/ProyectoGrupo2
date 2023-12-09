@@ -320,8 +320,10 @@ while True:
     elif opcion == '4':
         rastrear_paquetes()
     elif opcion == '5':
-        estadisticas()
+        cambiar_estado()
     elif opcion == '6':
+        estadisticas()
+    elif opcion == '7':
         print("Guardando datos en el archivo")
         break
     else:
