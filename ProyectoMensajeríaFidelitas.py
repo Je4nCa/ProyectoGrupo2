@@ -309,7 +309,8 @@ def estadisticas():
 
 inicializar_sistema()
 #Menú revisado por Fiorella
- print("Menú:")
+while True:
+    print("Menú:")
     print("1. Registrar usuario del comercio")
     print("2. Crear paquete para envío")
     print("3. Registrar Factura Electrónica")
